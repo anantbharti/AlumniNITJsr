@@ -77,6 +77,7 @@ public class SignUp extends Fragment {
             @Override
             public void onClick(View view) {
                 SignIn signIn = new SignIn();
+                assert getFragmentManager() != null;
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
                 ft.replace(R.id.wrapper,signIn);
                 ft.commit();

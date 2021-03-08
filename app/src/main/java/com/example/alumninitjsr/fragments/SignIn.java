@@ -18,11 +18,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.alumninitjsr.APIClient;
+import com.example.alumninitjsr.APIInterface;
 import com.example.alumninitjsr.R;
 import com.example.alumninitjsr.responses.LoginResponse;
 
 import java.util.HashMap;
 
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -86,7 +89,14 @@ public class SignIn extends Fragment {
         HashMap<String,String> loginRequest=new HashMap<String, String>();
         loginRequest.put("username",loginUsername);
         loginRequest.put("password",loginPassword);
-        Call<LoginResponse> call= APIClient.getApiInterface().loginUser(loginRequest);
+        RequestBody requestBody = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                .addFormDataPart("username",loginUsername)
+                .addFormDataPart("password",loginPassword)
+                .build();
+
+
+        Call<LoginResponse> call= APIClient.getApiInterface().loginUser(requestBody);
         call.enqueue(new Callback<LoginResponse>() {
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {

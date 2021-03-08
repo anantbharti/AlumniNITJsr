@@ -28,12 +28,6 @@ import static android.app.Activity.RESULT_OK;
 
 public class SignUp extends Fragment {
 
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    private String mParam1;
-    private String mParam2;
-
     TextView signIn;
     CircleImageView regImg;
     Uri regImgPath;
@@ -42,14 +36,7 @@ public class SignUp extends Fragment {
 
     }
 
-    public static SignUp newInstance(String param1, String param2) {
-        SignUp fragment = new SignUp();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -62,10 +49,7 @@ public class SignUp extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+
     }
 
     @Override

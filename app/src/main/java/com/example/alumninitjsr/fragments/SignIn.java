@@ -1,7 +1,10 @@
 package com.example.alumninitjsr.fragments;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -10,40 +13,33 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.alumninitjsr.APIClient;
 import com.example.alumninitjsr.R;
+import com.example.alumninitjsr.responses.LoginResponse;
 
+import java.util.HashMap;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class SignIn extends Fragment {
 
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    private String mParam1;
-    private String mParam2;
-
-    TextView signUp;
+    TextView signUp,forgotPwdBtn;
+    EditText loginId,loginPwd;
+    Button loginBtn;
+    ProgressDialog progressDialog;
 
     public SignIn() {
-    }
-
-    public static SignIn newInstance(String param1, String param2) {
-        SignIn fragment = new SignIn();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
 
     }
 
@@ -51,7 +47,10 @@ public class SignIn extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.fragment_sign_in, container, false);
-        signUp=view.findViewById(R.id.sign_up_btn);
+        setUpViews(view);
+        progressDialog=new ProgressDialog(getContext());
+        progressDialog.setMessage("Logging in...");
+
         signUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -62,6 +61,60 @@ public class SignIn extends Fragment {
             }
 
         });
+        loginBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String loginUsername=loginId.getText().toString().trim();
+                String loginPassword=loginPwd.getText().toString().trim();
+
+                if(loginUsername.isEmpty()){
+                    Toast.makeText(getContext(),"Enter username!",Toast.LENGTH_SHORT).show();
+                }
+                else if(loginPassword.isEmpty()){
+                    Toast.makeText(getContext(),"Enter password!",Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    progressDialog.show();
+                    startLogin(loginUsername,loginPassword);
+                }
+            }
+        });
         return view;
     }
+
+    private void startLogin(String loginUsername,String loginPassword){
+        HashMap<String,String> loginRequest=new HashMap<String, String>();
+        loginRequest.put("username",loginUsername);
+        loginRequest.put("password",loginPassword);
+        Call<LoginResponse> call= APIClient.getApiInterface().loginUser(loginRequest);
+        call.enqueue(new Callback<LoginResponse>() {
+            @Override
+            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+                progressDialog.dismiss();
+                if(response.isSuccessful()){
+                    LoginResponse loginResponse = new LoginResponse();
+                    loginResponse=response.body();
+                    Toast.makeText(getContext(),loginResponse.getMessage(),Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    Toast.makeText(getContext(),"Login failed!",Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<LoginResponse> call, Throwable t) {
+                progressDialog.dismiss();
+                Toast.makeText(getContext(),"Throwable "+t.getLocalizedMessage(),Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void setUpViews(View v){
+        signUp=v.findViewById(R.id.sign_up_btn);
+        loginId=v.findViewById(R.id.login_id);
+        loginPwd=v.findViewById(R.id.login_pwd);
+        loginBtn=v.findViewById(R.id.login_btn);
+        forgotPwdBtn=v.findViewById(R.id.forgot_pwd_btn);
+    }
+
 }

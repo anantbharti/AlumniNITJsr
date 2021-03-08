@@ -1,0 +1,803 @@
+{
+	"variables": [],
+	"info": {
+		"name": "I&AR API",
+		"_postman_id": "b4ad13e7-5256-6732-4b11-b8f80c3b9619",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Public API",
+			"description": "",
+			"item": [
+				{
+					"name": "Album List",
+					"request": {
+						"url": {
+							"raw": "https://pseudohack.in/Api/Albums?",
+							"protocol": "https",
+							"host": [
+								"pseudohack",
+								"in"
+							],
+							"path": [
+								"Api",
+								"Albums"
+							],
+							"query": [
+								{
+									"key": "query",
+									"value": "alumni",
+									"disabled": true
+								}
+							],
+							"variable": []
+						},
+						"method": "POST",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Fetch Album Photo",
+					"request": {
+						"url": "https://pseudohack.in/Api/AlbumPhoto",
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "album_id",
+									"value": "1",
+									"type": "text"
+								}
+							]
+						},
+						"description": "# Required Field\n    1. album_id (string)"
+					},
+					"response": []
+				},
+				{
+					"name": "Event",
+					"request": {
+						"url": "https://pseudohack.in/Api/Events",
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "page",
+									"value": "1",
+									"type": "text"
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Event Detail",
+					"request": {
+						"url": "https://pseudohack.in/Api/EventDetail/Test",
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "page",
+									"value": "1",
+									"type": "text"
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "UpcomingEvent",
+					"request": {
+						"url": "https://pseudohack.in/Api/UpcomingEvent",
+						"method": "POST",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Notice",
+					"request": {
+						"url": "https://pseudohack.in/Api/Notice",
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "page",
+									"value": "2",
+									"type": "text"
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Story",
+					"request": {
+						"url": "https://pseudohack.in/Api/Stories",
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "page",
+									"value": "5",
+									"type": "text"
+								},
+								{
+									"key": "month",
+									"value": "oct",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "year",
+									"value": "2020",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Story Detail",
+					"request": {
+						"url": "https://pseudohack.in/Api/StoryDetail/test",
+						"method": "POST",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "LatestStory",
+					"request": {
+						"url": "https://pseudohack.in/Api/LatestStory",
+						"method": "POST",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Jobs",
+					"request": {
+						"url": "https://pseudohack.in/Api/AllJobs",
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "page",
+									"value": "2",
+									"type": "text"
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get Job Detail",
+					"request": {
+						"url": "https://pseudohack.in/Api/JobDetail/sakskaksj",
+						"method": "POST",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Donation",
+					"request": {
+						"url": "https://pseudohack.in/Api/Donation",
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.W3sidXNlcm5hbWUiOiJhYmhpc2hla2pudmsiLCJhbHVtbmlfaWQiOiIxOTcwUEkxIiwiZW1haWwiOm51bGx9XQ.nTnYSVYsV6HWiUKPU4lim00SGjTgGeeZHi0o_Z4utXs",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Donation Detail",
+					"request": {
+						"url": "https://pseudohack.in/Api/donationDetail/1",
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "page",
+									"value": "1",
+									"type": "text"
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "ArchivedDonations",
+					"request": {
+						"url": "https://pseudohack.in/Api/archivedDonations",
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.W3sidXNlcm5hbWUiOiJhYmhpc2hla2pudmsiLCJhbHVtbmlfaWQiOiIxOTcwUEkxIiwiZW1haWwiOm51bGx9XQ.nTnYSVYsV6HWiUKPU4lim00SGjTgGeeZHi0o_Z4utXs",
+									"type": "text"
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "AlumniApi",
+			"description": "",
+			"item": [
+				{
+					"name": "Post Job",
+					"request": {
+						"url": "https://pseudohack.in/AlumniApi/AddJob",
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.W3sidXNlcm5hbWUiOiJhYmhpc2hla2pudmsiLCJhbHVtbmlfaWQiOiIxOTcwUEkxIiwiZW1haWwiOm51bGx9XQ.nTnYSVYsV6HWiUKPU4lim00SGjTgGeeZHi0o_Z4utXs",
+									"type": "text"
+								},
+								{
+									"key": "title",
+									"value": "New Job",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "Hello World",
+									"type": "text"
+								},
+								{
+									"key": "link_to_apply",
+									"value": "abhishek",
+									"type": "text"
+								},
+								{
+									"key": "expiry",
+									"value": "124585",
+									"type": "text"
+								},
+								{
+									"key": "company_name",
+									"value": "NIT",
+									"type": "text"
+								},
+								{
+									"key": "job_profile",
+									"value": "SDE",
+									"type": "text"
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Job Posted By Me",
+					"request": {
+						"url": "https://pseudohack.in/AlumniApi/GetMyJob",
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.W3sidXNlcm5hbWUiOiJhYmhpc2hla2pudmsiLCJhbHVtbmlfaWQiOiIxOTcwUEkxIiwiZW1haWwiOm51bGx9XQ.nTnYSVYsV6HWiUKPU4lim00SGjTgGeeZHi0o_Z4utXs",
+									"type": "text"
+								},
+								{
+									"key": "page",
+									"value": "1",
+									"type": "text"
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Job",
+					"request": {
+						"url": "https://pseudohack.in/AlumniApi/DeleteJob",
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.W3sidXNlcm5hbWUiOiJhYmhpc2hla2pudmsiLCJhbHVtbmlfaWQiOiIxOTcwUEkxIiwiZW1haWwiOm51bGx9XQ.nTnYSVYsV6HWiUKPU4lim00SGjTgGeeZHi0o_Z4utXs",
+									"type": "text"
+								},
+								{
+									"key": "job_id",
+									"value": "60448ca122",
+									"type": "text"
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Edit Job",
+					"request": {
+						"url": "https://pseudohack.in/AlumniApi/EditJob",
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.W3sidXNlcm5hbWUiOiJhYmhpc2hla2pudmsiLCJhbHVtbmlfaWQiOiIxOTcwUEkxIiwiZW1haWwiOm51bGx9XQ.nTnYSVYsV6HWiUKPU4lim00SGjTgGeeZHi0o_Z4utXs",
+									"type": "text"
+								},
+								{
+									"key": "title",
+									"value": "New Job",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "Hello World",
+									"type": "text"
+								},
+								{
+									"key": "link_to_apply",
+									"value": "http://nitjsr.ac.in",
+									"type": "text"
+								},
+								{
+									"key": "expiry",
+									"value": "124585",
+									"type": "text"
+								},
+								{
+									"key": "company_name",
+									"value": "NIT JSR",
+									"type": "text"
+								},
+								{
+									"key": "job_profile",
+									"value": "SDE",
+									"type": "text"
+								},
+								{
+									"key": "job_id",
+									"value": "60448ca380",
+									"type": "text"
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "My Donations",
+					"request": {
+						"url": "https://pseudohack.in/AlumniApi/myDonations",
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.W3sidXNlcm5hbWUiOiJhYmhpc2hla2pudmsiLCJhbHVtbmlfaWQiOiIxOTcwUEkxIiwiZW1haWwiOm51bGx9XQ.nTnYSVYsV6HWiUKPU4lim00SGjTgGeeZHi0o_Z4utXs",
+									"type": "text"
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Add Donation",
+					"request": {
+						"url": "https://pseudohack.in/AlumniApi/addDonation",
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.W3sidXNlcm5hbWUiOiJhYmhpc2hla2pudmsiLCJhbHVtbmlfaWQiOiIxOTcwUEkxIiwiZW1haWwiOm51bGx9XQ.nTnYSVYsV6HWiUKPU4lim00SGjTgGeeZHi0o_Z4utXs",
+									"type": "text"
+								},
+								{
+									"key": "amount",
+									"value": "50",
+									"type": "text"
+								},
+								{
+									"key": "donation_purpose_id",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "via",
+									"value": "SBI",
+									"type": "text"
+								},
+								{
+									"key": "transaction_id",
+									"value": "12457",
+									"type": "text"
+								},
+								{
+									"key": "message",
+									"value": "AAA",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Donation Data",
+					"request": {
+						"url": "https://pseudohack.in/AlumniApi/removeDonation",
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.W3sidXNlcm5hbWUiOiJhYmhpc2hla2pudmsiLCJhbHVtbmlfaWQiOiIxOTcwUEkxIiwiZW1haWwiOm51bGx9XQ.nTnYSVYsV6HWiUKPU4lim00SGjTgGeeZHi0o_Z4utXs",
+									"type": "text"
+								},
+								{
+									"key": "donation_id",
+									"value": "8",
+									"type": "text"
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Check Username",
+					"request": {
+						"url": "https://pseudohack.in/AlumniApi/checkUsername",
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "username",
+									"value": "a",
+									"type": "text"
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"url": "https://pseudohack.in/AlumniApi/login",
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "username",
+									"value": "abhishekjnvk",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "1234562",
+									"type": "text"
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Registration",
+					"request": {
+						"url": "https://pseudohack.in/AlumniApi/register",
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "username",
+									"value": "abahiashe534a",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "1234562",
+									"type": "text"
+								},
+								{
+									"key": "batch",
+									"value": "1970",
+									"type": "text"
+								},
+								{
+									"key": "branch",
+									"value": "7",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "Abhishek",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "abhiashek@agmail.co",
+									"type": "text"
+								},
+								{
+									"key": "user_type",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "linkedin",
+									"value": "abhishekjnvka",
+									"type": "text"
+								},
+								{
+									"key": "dob",
+									"value": "06 feb",
+									"type": "text"
+								},
+								{
+									"key": "hometown",
+									"value": "koderma",
+									"type": "text"
+								},
+								{
+									"key": "mobile",
+									"value": "1234568790",
+									"type": "text"
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "My Profile",
+					"request": {
+						"url": "https://pseudohack.in/AlumniApi/MyProfile",
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.W3sidXNlcm5hbWUiOiJhYmhpc2hla2pudmsiLCJhbHVtbmlfaWQiOiIxOTcwUEkxIiwiZW1haWwiOm51bGx9XQ.nTnYSVYsV6HWiUKPU4lim00SGjTgGeeZHi0o_Z4utXs",
+									"type": "text"
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Alumnus Profile",
+					"request": {
+						"url": "https://pseudohack.in/AlumniApi/AlumniProfile",
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.W3sidXNlcm5hbWUiOiJhYmhpc2hla2pudmsiLCJhbHVtbmlfaWQiOiIxOTcwUEkxIiwiZW1haWwiOm51bGx9XQ.nTnYSVYsV6HWiUKPU4lim00SGjTgGeeZHi0o_Z4utXs",
+									"type": "text"
+								},
+								{
+									"key": "alumni_id",
+									"value": "1970PI2",
+									"type": "text"
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Search Alumni",
+					"request": {
+						"url": "https://pseudohack.in/AlumniApi/SearchAlumni",
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.W3sidXNlcm5hbWUiOiJhYmhpc2hla2pudmsiLCJhbHVtbmlfaWQiOiIxOTcwUEkxIiwiZW1haWwiOm51bGx9XQ.nTnYSVYsV6HWiUKPU4lim00SGjTgGeeZHi0o_Z4utXs",
+									"type": "text"
+								},
+								{
+									"key": "page",
+									"value": "5",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "search",
+									"value": "Delhi",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "batch",
+									"value": "1970",
+									"type": "text"
+								},
+								{
+									"key": "branch",
+									"value": "7",
+									"type": "text"
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "AskToShare",
+					"request": {
+						"url": "https://pseudohack.in/AlumniApi/AskToShareProfile",
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.W3sidXNlcm5hbWUiOiJhYmhpc2hla2pudmsiLCJhbHVtbmlfaWQiOiIxOTcwUEkxIiwiZW1haWwiOm51bGx9XQ.nTnYSVYsV6HWiUKPU4lim00SGjTgGeeZHi0o_Z4utXs",
+									"type": "text"
+								},
+								{
+									"key": "alumni_id",
+									"value": "1970PI2",
+									"type": "text"
+								},
+								{
+									"key": "message",
+									"value": "Please Share Your Profile Data Sir ",
+									"type": "text"
+								},
+								{
+									"key": "share_alternate_email",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "share_blood_group",
+									"value": "1",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "share_mobile",
+									"value": "1",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "share_current_city",
+									"value": "1",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "share_hometown",
+									"value": "1",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "share_dob",
+									"value": "1",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

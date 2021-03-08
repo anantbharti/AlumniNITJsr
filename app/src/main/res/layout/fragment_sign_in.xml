@@ -26,7 +26,9 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_below="@id/vec_top"
+        android:layout_above="@id/vec_bottom">
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_gravity="center"
@@ -46,13 +48,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="10dp"
-                    android:hint="e-mail id"
+                    android:hint="Username"
                     android:id="@+id/login_id"
                     android:inputType="textEmailAddress"/>
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="password"
+                    android:hint="Password"
                     android:padding="10dp"
                     android:id="@+id/login_pwd"
                     android:inputType="textPassword"/>

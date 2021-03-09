@@ -86,9 +86,7 @@ public class SignIn extends Fragment {
     }
 
     private void startLogin(String loginUsername,String loginPassword){
-        HashMap<String,String> loginRequest=new HashMap<String, String>();
-        loginRequest.put("username",loginUsername);
-        loginRequest.put("password",loginPassword);
+
         RequestBody requestBody = new MultipartBody.Builder()
                 .setType(MultipartBody.FORM)
                 .addFormDataPart("username",loginUsername)

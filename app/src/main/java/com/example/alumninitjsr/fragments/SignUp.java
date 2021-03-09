@@ -1,18 +1,11 @@
 package com.example.alumninitjsr.fragments;
 
-import android.Manifest;
 import android.app.DatePickerDialog;
-import android.content.Intent;
-import android.content.pm.PackageManager;
+import android.app.ProgressDialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.net.Uri;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -24,22 +17,24 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.alumninitjsr.MainActivity;
+import com.example.alumninitjsr.APIClient;
 import com.example.alumninitjsr.R;
-import com.google.android.material.textfield.TextInputLayout;
+import com.example.alumninitjsr.responses.LoginResponse;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import de.hdodenhof.circleimageview.CircleImageView;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
-import static android.app.Activity.RESULT_OK;
 import static android.content.ContentValues.TAG;
 
 public class SignUp extends Fragment {
@@ -49,7 +44,11 @@ public class SignUp extends Fragment {
     private DatePickerDialog.OnDateSetListener mDateSetListener;
     private Spinner branchSpinner,batchSpinner;
     Button register;
-    static String rDob,rName,rUsername,rEmail,rLinkedIn,rHometown,rMobNo,rBranch,rBatch,rPwd;
+    static String rDob,rName,rUsername,rEmail,rLinkedIn,rHometown,rMobNo,rBranch,rBatch,rPwd,rUserType;
+    RadioGroup userTypRadGrp;
+    RadioButton profRadBtn,stuRadBtn;
+    private ProgressDialog progressDialog;
+
     public SignUp() {
     }
     @Override
@@ -63,6 +62,7 @@ public class SignUp extends Fragment {
         View view= inflater.inflate(R.layout.fragment_sign_up, container, false);
         setUpViews(view);
         setSpinner();
+        progressDialog=new ProgressDialog(getContext());
 
         signIn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,13 +81,14 @@ public class SignUp extends Fragment {
                 openCal();
             }
         });
+
         mDateSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                 month = month + 1;
                 Log.d(TAG, "onDateSet: mm/dd/yyy: " + month + "/" + day + "/" + year);
 
-                String date = month + "/" + day + "/" + year;
+                String date = day + "/" + month + "/" + year;
                 regDob.setText(date);
             }
         };
@@ -96,13 +97,9 @@ public class SignUp extends Fragment {
             @Override
             public void onClick(View view) {
                 if(validFields()){
-                    if(validUsername()){
-                        Toast.makeText(getContext(),"Registering...",Toast.LENGTH_SHORT).show();
-                    }else{
-                        Toast.makeText(getContext(),"Username already exists! Change username",Toast.LENGTH_SHORT).show();
-                    }
-                }else{
-                    Toast.makeText(getContext(),"Fill all the details!",Toast.LENGTH_SHORT);
+                    progressDialog.setMessage("Registering...");
+                    progressDialog.show();
+                    startRegistration();
                 }
             }
         });
@@ -110,8 +107,28 @@ public class SignUp extends Fragment {
         return  view;
     }
 
-    private boolean validUsername(){
-        return true;
+
+    private void startRegistration(){
+        Call<LoginResponse> call= APIClient.getApiInterface().register(rUsername,rPwd,rBatch,rBranch,rName,rEmail,rUserType,rLinkedIn,rDob,rHometown,rMobNo);
+        call.enqueue(new Callback<LoginResponse>() {
+            @Override
+            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+                if(response.isSuccessful()){
+                    LoginResponse registerResponse=new LoginResponse();
+                    registerResponse = response.body();
+                    Toast.makeText(getContext(),registerResponse.getMessage(),Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    Toast.makeText(getContext(),"Error!",Toast.LENGTH_SHORT).show();
+                }
+                progressDialog.dismiss();
+            }
+            @Override
+            public void onFailure(Call<LoginResponse> call, Throwable t) {
+                progressDialog.dismiss();
+                Toast.makeText(getContext(),"Throwable "+t.getLocalizedMessage(),Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private boolean validFields(){
@@ -160,6 +177,16 @@ public class SignUp extends Fragment {
             Toast.makeText(getContext(),"Select batch!",Toast.LENGTH_SHORT).show();
             return false;
         }
+        if(!profRadBtn.isChecked()&&!stuRadBtn.isChecked()){
+            Toast.makeText(getContext(),"Choose user type!",Toast.LENGTH_SHORT).show();
+            return false;
+        }else{
+            if(profRadBtn.isChecked()){
+                rUserType="2";
+            }else{
+                rUserType="1";
+            }
+        }
         rPwd=regPwd.getText().toString().trim();
         if(rPwd.isEmpty()){
             Toast.makeText(getContext(),"Enter password!",Toast.LENGTH_SHORT).show();
@@ -181,6 +208,9 @@ public class SignUp extends Fragment {
         regMobNo=view.findViewById(R.id.reg_mob_no);
         regPwd=view.findViewById(R.id.reg_password);
         register=view.findViewById(R.id.btn_register);
+        userTypRadGrp=view.findViewById(R.id.user_type_rad_grp);
+        profRadBtn=view.findViewById(R.id.reg_prof_rad_btn);
+        stuRadBtn=view.findViewById(R.id.reg_stu_rad_btn);
     }
 
     private void setSpinner(){
@@ -224,4 +254,5 @@ public class SignUp extends Fragment {
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.show();
     }
+
 }

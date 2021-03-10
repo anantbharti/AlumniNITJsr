@@ -1,6 +1,7 @@
 package com.example.alumninitjsr;
 
 import com.example.alumninitjsr.responses.LoginResponse;
+import com.example.alumninitjsr.responses.ProfileResponse;
 
 import okhttp3.RequestBody;
 import retrofit2.Call;
@@ -27,4 +28,9 @@ public interface APIInterface {
                                     @Field("dob") String dob,
                                     @Field("hometown") String hometown,
                                     @Field("mobile") String mobile);
+    @POST("AlumniProfile")
+    Call<ProfileResponse> alumniProfile(@Body RequestBody requestBody);
+
+    @POST("MyProfile")
+    Call<ProfileResponse> myProfile(@Body RequestBody requestBody);
 }

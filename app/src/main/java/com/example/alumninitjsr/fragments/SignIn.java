@@ -1,28 +1,26 @@
 package com.example.alumninitjsr.fragments;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
-import androidx.annotation.Nullable;
-import androidx.annotation.StringRes;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.alumninitjsr.APIClient;
-import com.example.alumninitjsr.APIInterface;
+import com.example.alumninitjsr.Home;
 import com.example.alumninitjsr.R;
 import com.example.alumninitjsr.responses.LoginResponse;
-
-import java.util.HashMap;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -30,20 +28,22 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static android.content.Context.MODE_PRIVATE;
+
 public class SignIn extends Fragment {
 
     TextView signUp,forgotPwdBtn;
     EditText loginId,loginPwd;
     Button loginBtn;
     ProgressDialog progressDialog;
+    SharedPreferences sharedPreferences;
+    CheckBox remMe;
 
     public SignIn() {
     }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
@@ -51,8 +51,15 @@ public class SignIn extends Fragment {
                              Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.fragment_sign_in, container, false);
         setUpViews(view);
+
         progressDialog=new ProgressDialog(getContext());
         progressDialog.setMessage("Logging in...");
+        sharedPreferences=getActivity().getSharedPreferences("Credentials",MODE_PRIVATE);
+        loginId.setText(sharedPreferences.getString("username",""));
+        loginPwd.setText(sharedPreferences.getString("password",""));
+        if(sharedPreferences.getString("remMe","").equals("1")){
+            remMe.setChecked(true);
+        }
 
         signUp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,6 +71,7 @@ public class SignIn extends Fragment {
             }
 
         });
+
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -78,6 +86,19 @@ public class SignIn extends Fragment {
                 }
                 else{
                     progressDialog.show();
+                    if(remMe.isChecked()){
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putString("username", loginUsername);
+                        editor.putString("password", loginPassword);
+                        editor.putString("remMe","1");
+                        editor.commit();
+                    }else{
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putString("username", "");
+                        editor.putString("password", "");
+                        editor.putString("remMe","0");
+                        editor.commit();
+                    }
                     startLogin(loginUsername,loginPassword);
                 }
             }
@@ -103,6 +124,10 @@ public class SignIn extends Fragment {
                     LoginResponse loginResponse = new LoginResponse();
                     loginResponse=response.body();
                     Toast.makeText(getContext(),loginResponse.getMessage(),Toast.LENGTH_SHORT).show();
+                    if(loginResponse.getStatus()==1){
+                        startActivity(new Intent(getActivity(), Home.class));
+                        getActivity().finish();
+                    }
                 }
                 else {
                     Toast.makeText(getContext(),"Login failed!",Toast.LENGTH_SHORT).show();
@@ -112,7 +137,7 @@ public class SignIn extends Fragment {
             @Override
             public void onFailure(Call<LoginResponse> call, Throwable t) {
                 progressDialog.dismiss();
-                Toast.makeText(getContext(),"Throwable "+t.getLocalizedMessage(),Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(),t.getLocalizedMessage(),Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -123,6 +148,7 @@ public class SignIn extends Fragment {
         loginPwd=v.findViewById(R.id.login_pwd);
         loginBtn=v.findViewById(R.id.login_btn);
         forgotPwdBtn=v.findViewById(R.id.forgot_pwd_btn);
+        remMe=v.findViewById(R.id.rem_me);
     }
 
 }

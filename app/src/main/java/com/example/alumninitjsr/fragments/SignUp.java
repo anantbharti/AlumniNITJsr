@@ -99,7 +99,7 @@ public class SignUp extends Fragment {
                 if(validFields()){
                     progressDialog.setMessage("Registering...");
                     progressDialog.show();
-                    startRegistration();
+                    //startRegistration();
                 }
             }
         });

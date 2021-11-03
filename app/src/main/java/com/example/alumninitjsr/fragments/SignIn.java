@@ -3,8 +3,10 @@ package com.example.alumninitjsr.fragments;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -21,6 +23,10 @@ import com.example.alumninitjsr.APIClient;
 import com.example.alumninitjsr.Home;
 import com.example.alumninitjsr.R;
 import com.example.alumninitjsr.responses.LoginResponse;
+
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Objects;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -46,6 +52,7 @@ public class SignIn extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -54,17 +61,17 @@ public class SignIn extends Fragment {
 
         progressDialog=new ProgressDialog(getContext());
         progressDialog.setMessage("Logging in...");
-        sharedPreferences=getActivity().getSharedPreferences("Credentials",MODE_PRIVATE);
+        sharedPreferences= Objects.requireNonNull(getActivity()).getSharedPreferences("Credentials",MODE_PRIVATE);
         loginId.setText(sharedPreferences.getString("username",""));
         loginPwd.setText(sharedPreferences.getString("password",""));
-        if(sharedPreferences.getString("remMe","").equals("1")){
+        if(Objects.equals(sharedPreferences.getString("remMe", ""), "1"))
             remMe.setChecked(true);
-        }
 
         signUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 SignUp signUp = new SignUp();
+                assert getFragmentManager() != null;
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
                 ft.replace(R.id.wrapper,signUp);
                 ft.commit();
@@ -86,19 +93,17 @@ public class SignIn extends Fragment {
                 }
                 else{
                     progressDialog.show();
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
                     if(remMe.isChecked()){
-                        SharedPreferences.Editor editor = sharedPreferences.edit();
                         editor.putString("username", loginUsername);
                         editor.putString("password", loginPassword);
                         editor.putString("remMe","1");
-                        editor.commit();
                     }else{
-                        SharedPreferences.Editor editor = sharedPreferences.edit();
                         editor.putString("username", "");
                         editor.putString("password", "");
                         editor.putString("remMe","0");
-                        editor.commit();
                     }
+                    editor.apply();
                     startLogin(loginUsername,loginPassword);
                 }
             }
@@ -117,16 +122,18 @@ public class SignIn extends Fragment {
 
         Call<LoginResponse> call= APIClient.getApiInterface().loginUser(requestBody);
         call.enqueue(new Callback<LoginResponse>() {
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
-            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+            public void onResponse(@NotNull Call<LoginResponse> call, @NotNull Response<LoginResponse> response) {
                 progressDialog.dismiss();
                 if(response.isSuccessful()){
-                    LoginResponse loginResponse = new LoginResponse();
+                    LoginResponse loginResponse;
                     loginResponse=response.body();
+                    assert loginResponse != null;
                     Toast.makeText(getContext(),loginResponse.getMessage(),Toast.LENGTH_SHORT).show();
                     if(loginResponse.getStatus()==1){
                         startActivity(new Intent(getActivity(), Home.class));
-                        getActivity().finish();
+                        Objects.requireNonNull(getActivity()).finish();
                     }
                 }
                 else {
@@ -135,7 +142,7 @@ public class SignIn extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<LoginResponse> call, Throwable t) {
+            public void onFailure(@NotNull Call<LoginResponse> call, @NotNull Throwable t) {
                 progressDialog.dismiss();
                 Toast.makeText(getContext(),t.getLocalizedMessage(),Toast.LENGTH_SHORT).show();
             }
